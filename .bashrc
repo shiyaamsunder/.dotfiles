@@ -57,7 +57,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -85,7 +85,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
 alias ll='ls -alF'
@@ -116,6 +116,32 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+
+# custom functions
+
+# create a new java project using gradle and a run script
+function javaproject(){
+  if [ "$#" -eq 0 ];
+  then
+    echo -e "\nMust pass a project name."
+    echo -e "\nUSAGE: javaproject project_name."
+  else
+   # mkdir $1
+   # cd $1
+
+    config='\napplication {\n
+     \tmainClassName = project.hasProperty("mainClass") ? project.getProperty("mainClass") : "NULL"\n
+      }\ntask runApp(type:JavaExec) {\n
+      \tclasspath = sourceSets.main.runtimeClasspath\n
+      \tmainClass = project.hasProperty("mainClass") ? project.getProperty("mainClass") : "package.MyDefaultMain"\n
+    }\nrun {\n
+    \tstandardInput = System.in\n
+    }\n
+    '
+
+  fi
+}
 
 export FZF_DEFAULT_COMMAND='rg --files'
 export JAVA_HOME='/opt/jdk-19.0.2'

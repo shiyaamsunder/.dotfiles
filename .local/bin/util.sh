@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 languages=`echo "java javascript typescript python go c c++ c#" | tr ' ' '\n'`
-coreutils=`echo "xargs find mv grep sed awk tmux man" | tr ' ' '\n'`
+coreutils=`echo "xargs find mv grep sed awk tmux man tar" | tr ' ' '\n'`
 
 selected=`printf "$languages\n$coreutils" | fzf`
 
